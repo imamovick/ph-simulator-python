@@ -3,44 +3,40 @@ import tkinter as tk
 class MovingProbe:
     def __init__(self, master):
         self.master = master
-        master.title("Moving Probe Animation")
-
         self.canvas = tk.Canvas(master, width=400, height=300)
         self.canvas.pack()
 
-        # Main body of the probe
-        self.body = self.canvas.create_rectangle(150, 100, 250, 150, fill="gray")
+        # Sensor of the probe (outer circle)
+        self.sensor_outer = self.canvas.create_oval(185, 130, 205, 150, fill="white", outline="black")
 
-        # Antenna
-        self.antenna = self.canvas.create_line(200, 70, 200, 100, fill="black")
+        # Sensor detail (inner circle)
+        self.sensor_inner = self.canvas.create_oval(192, 137, 198, 143, fill="orange")
 
-        # Legs of the probe
-        self.leg1 = self.canvas.create_line(175, 150, 175, 180, fill="black")
-        self.leg2 = self.canvas.create_line(225, 150, 225, 180, fill="black")
-
-        # Sensor/Eye of the probe
-        self.sensor = self.canvas.create_oval(190, 110, 210, 130, fill="blue")
+        # Main shaft of the probe
+        self.shaft = self.canvas.create_line(195, 150, 195, 290, fill="black", width=2)
 
         self.button = tk.Button(master, text="Move it Ronnie", command=self.animate_probe)
         self.button.pack()
 
     def animate_probe(self):
         steps = 100  # Number of steps for smoother animation
-        down_step = 100 / steps  # Total distance to move divided by steps
-        up_step = -100 / steps
-        delay = 2000 / steps  # Total duration divided by steps for each part
+        down_step = 1  # Total distance to move divided by steps
+        up_step = -1
+        delay = 20  # Delay in milliseconds for each step
 
         for i in range(steps):
-            self.master.after(int(delay * i), lambda step=down_step: self.move_probe(step))
-        for i in range(steps):
-            self.master.after(int(2500 + delay * i), lambda step=up_step: self.move_probe(step))
+            self.master.after(i * delay, lambda step=down_step: self.move_probe(step))
+        for i in range(steps, 2*steps):
+            self.master.after(i * delay, lambda step=up_step: self.move_probe(step))
 
     def move_probe(self, step):
         # Move all parts of the probe together
-        self.canvas.move(self.body, 0, step)
-        self.canvas.move(self.antenna, 0, step)
-        self.canvas.move(self.leg1, 0, step)
-        self.canvas.move(self.leg2, 0, step)
-        self.canvas.move(self.sensor, 0, step)
+        self.canvas.move(self.shaft, 0, step)
+        self.canvas.move(self.sensor_outer, 0, step)
+        self.canvas.move(self.sensor_inner, 0, step)
         self.canvas.update()
 
+if name == "__main__":
+    root = tk.Tk()
+    my_gui = MovingProbe(root)
+    root.mainloop()
