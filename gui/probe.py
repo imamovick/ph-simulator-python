@@ -36,7 +36,7 @@ class MovingProbe:
         self.canvas.move(self.sensor_inner, 0, step)
         self.canvas.update()
 
-if name == "__main__":
+if __name__ == "__main__":
     root = tk.Tk()
     my_gui = MovingProbe(root)
     root.mainloop()
