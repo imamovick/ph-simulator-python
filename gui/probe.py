@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class MovingProbeApp:
+class MovingProbe:
     def __init__(self, master):
         self.master = master
         master.title("Moving Probe Animation")
@@ -44,6 +44,3 @@ class MovingProbeApp:
         self.canvas.move(self.sensor, 0, step)
         self.canvas.update()
 
-root = tk.Tk()
-app = MovingProbeApp(root)
-root.mainloop()
