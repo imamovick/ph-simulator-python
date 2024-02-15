@@ -4,7 +4,7 @@ class MovingProbe:
     def __init__(self, master):
         self.master = master
         self.canvas = tk.Canvas(master, width=400, height=300)
-        self.canvas.pack()
+        self.canvas.pack(anchor='center')
 
         # Sensor of the probe (outer circle)
         self.sensor_outer = self.canvas.create_oval(185, 130, 205, 150, fill="white", outline="black")
