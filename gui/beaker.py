@@ -7,7 +7,8 @@ def create_beaker(master, width, height):
 
     # Create a canvas for the beaker
     beaker_canvas = tk.Canvas(master, width=beaker_width, height=beaker_height, bg='white')
-    beaker_canvas.pack(anchor='center')  # Pack to the left side of the root window
+    beaker_canvas.pack(anchor='s', padx=10, pady=10)  # Pack to the left side of the root window
+    beaker_canvas.place(x=350, y=550)
 
     # Draw the beaker outline
     beaker_outline = beaker_canvas.create_rectangle(10, 10, beaker_width - 10, beaker_height - 10,
@@ -24,12 +25,12 @@ def create_beaker(master, width, height):
     # Draw the measurement lines inside the beaker
     for i in range(4):
         line_y = beaker_height - (i + 1) * line_spacing
-        beaker_canvas.create_line(line_start_x, line_y, line_end_x, line_y, fill="black", width=2)
+        beaker_canvas.create_line(line_start_x, line_y, line_end_x, line_y, fill="black", width=1.5)
 
     # Add measurement texts to the right of the lines, within the beaker
-    text_x = line_end_x + 5  # Position text to the right of the end of the lines
-    beaker_canvas.create_text(text_x, beaker_height - 2 * line_spacing, text="10 mL", anchor="e")
-    beaker_canvas.create_text(text_x, beaker_height - 4 * line_spacing, text="20 mL", anchor="e")
+    text_x = line_end_x + 45  # Position text to the right of the end of the lines
+    beaker_canvas.create_text(text_x, beaker_height - 2 * line_spacing, text="10 mL", anchor="e", fill='black')
+    beaker_canvas.create_text(text_x, beaker_height - 4 * line_spacing, text="20 mL", anchor="e", fill='black')
 
     return beaker_canvas
 
