@@ -13,3 +13,7 @@ pKa_ammonium_chloride = 9.255  # Used for NH4Cl
 pKa_monohydrogen_phosphate = 7.208  # Used for NaH2PO4
 pKa_bicarbonate = 10.252  # Used for HO3 # strange minus mark at the end (ignored)
 pKa_carbonic_acid = 6.367  # Used for H2CO3
+
+# other consts
+initial_water_pH = 7
+drop_volume = 0.036

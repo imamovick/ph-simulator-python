@@ -13,7 +13,7 @@ def get_pH_buffer(pKa, base_conc, acid_conc):
     return pKa+math.log10(base_conc/acid_conc)
 
 # Function to calculate [H+] from pH
-#currently unused
+# currently unused
 def get_hplus_conc_from_ph(ph):
     return 10 ** (-ph)
 
@@ -71,7 +71,7 @@ def get_H2CO3(conc):
     return math.sqrt(Ka_carbonic_acid*conc)
 
 # Sodium Chloride, neutral salt
-def get_NaCl(conc):
+def get_NaCl():
     return 7
 
 # Ammonium Chloride, acidic salt of NH3
@@ -84,7 +84,7 @@ def get_NaC2H3O2(conc):
 
 # Sodium Bicarbonate, basic salt H2CO3
 def get_NaHCO3(conc):
-    return Kw / math.sqrt((Ka_carbonic_acid) * conc)
+    return Kw / math.sqrt(Ka_carbonic_acid * conc)
 
 # Sodium Carbonate, basic salt of HCO3
 def get_Na2CO3(conc):
@@ -93,3 +93,39 @@ def get_Na2CO3(conc):
 # Sodium Bisulfate, acidic salt of H2SO4
 def get_NaHSO4(conc):
     return math.sqrt(Ka_hydrogen_sulfate * conc)
+
+def get_volume_added(drops):
+    return drop_volume * drops
+
+def get_total_volume(drops):
+    return 10 + get_volume_added(drops)
+
+def get_HCl_M(conc, drops):
+    return ((conc * get_volume_added(drops)) / get_total_volume(drops)) + 1e-7
+def get_NaOH_M(conc, drops):
+    return Kw/get_HCl_M(conc, drops)
+
+'''
+For Hc2H3O2 (Acetic Acid) / NaC2H3O2 (Sodium Acetate) Buffer System
+'''
+def get_ace_buffer_system(conc):
+    return pKa_acetic_acid + math.log10(get_NaC2H3O2(conc)/get_HC2H3O2(conc))
+
+# Adding drops of .1 or .01 M HCl
+# NEEDS REWORK!!!
+def get_dynamic_HC2H3O2(conc, drops):
+    return ((10* conc)+(drop_volume * drops * conc)) / get_volume_added(drops)
+
+# Adding drops of .1 or .01 M HCl
+# NEEDS REWORK!!!
+def get_dynamic_NaC2H3O2(conc, drops):
+    return ((10* conc)-(drop_volume * drops * conc)) / get_volume_added(drops)
+
+'''
+For General Acid / Base Buffer System
+'''
+
+# ask Ron for function purpose
+# pKa_acid, acid, and base are placeholders
+def get_acid_base_buffer_system(conc, pKa_acid, acid, base):
+    return pKa_acid + math.log10(base/acid)
