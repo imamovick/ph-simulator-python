@@ -100,10 +100,10 @@ def get_volume_added(drops):
 def get_total_volume(drops):
     return 10 + get_volume_added(drops)
 
-def get_HCl_M(conc, drops):
+def get_HCl_H(conc, drops):
     return ((conc * get_volume_added(drops)) / get_total_volume(drops)) + 1e-7
-def get_NaOH_M(conc, drops):
-    return Kw/get_HCl_M(conc, drops)
+def get_NaOH_H(conc, drops):
+    return Kw / get_HCl_H(conc, drops)
 
 '''
 For Hc2H3O2 (Acetic Acid) / NaC2H3O2 (Sodium Acetate) Buffer System
@@ -113,14 +113,59 @@ def get_ace_buffer_system(conc):
 
 # Adding drops of .1 or .01 M HCl
 # NEEDS REWORK!!!
-def get_dynamic_HC2H3O2(conc, drops):
-    return ((10* conc)+(drop_volume * drops * conc)) / get_volume_added(drops)
+def get_HCl_HC2H3O2(conc, drops):
+    return ((10* conc) + (drop_volume * drops * conc)) / get_volume_added(drops)
 
 # Adding drops of .1 or .01 M HCl
 # NEEDS REWORK!!!
-def get_dynamic_NaC2H3O2(conc, drops):
-    return ((10* conc)-(drop_volume * drops * conc)) / get_volume_added(drops)
+def get_HCl_NaC2H3O2(conc, drops):
+    return ((10* conc) - (drop_volume * drops * conc)) / get_volume_added(drops)
 
+# NaC2H3O2 (Sodium Acetate) buffer capacity calculations
+# Adding drops of .1 or .01 M HCl
+def get_NaC2H3O2_buffer_overload():
+    print("Buffer Capacity Exceeded!")
+
+def get_NaC2H3O2_init_M(conc):
+    return conc * 10.000
+
+def get_HCl_M(drops, conc):
+    return 0.36 * drops * conc
+
+def get_excess_H(drops, conc):
+    return (get_HCl_M(drops, conc)) - (get_NaC2H3O2_init_M(conc))
+
+# H+ method defined in the NaC2H3O2 buffer capacity, using the excess H+
+def get_NaC2H3O2_H(drops, conc):
+    return (get_excess_H(drops, conc)) / (get_total_volume(drops))
+
+# HC2H3O2 buffer capacity calculations
+# Adding drops of .1 or .01 NaOH
+
+def get_NaOH_HC2H3O2(conc, drops):
+    return ((10.000 * conc) - (drop_volume * drops * conc)) / get_total_volume(drops)
+
+def get_NaOH_NaC2H3O2(conc, drops):
+    return ((10.000 * conc) + (drop_volume * drops * conc)) / get_total_volume(drops)
+
+def get_HC2H3O2_buffer_overload():
+    print("Buffer Capacity Exceeded!")
+
+def get_HC2H3O2_init_M(conc):
+    return conc*10.000
+
+def get_NaOH_M(drops, conc):
+    return drop_volume * drops * conc
+
+def get_excess_OH(drops, conc):
+    return get_NaOH_M(drops, conc) - get_HC2H3O2_init_M(conc)
+
+def get_OH(drops, conc):
+    return get_excess_OH(drops, conc) / get_total_volume(drops)
+
+# H+ method deined in the HC2H3O2 buffer capacity, using excess OH-
+def get_HC2H3O2_H(drops, conc):
+    return Kw / get_OH(drops, conc)
 '''
 For General Acid / Base Buffer System
 '''
@@ -129,3 +174,46 @@ For General Acid / Base Buffer System
 # pKa_acid, acid, and base are placeholders
 def get_acid_base_buffer_system(conc, pKa_acid, acid, base):
     return pKa_acid + math.log10(base/acid)
+
+# Adding drops of .1 or .01 M HCl
+# NEEDS REWORK!!!
+def get_HCl_acid(conc, drops):
+    return ((10* conc) + (drop_volume * drops * conc)) / get_volume_added(drops)
+
+# Adding drops of .1 or .01 M HCl
+# NEEDS REWORK!!!
+def get_HCl_base(conc, drops):
+    return ((10* conc) - (drop_volume * drops * conc)) / get_volume_added(drops)
+
+# Base buffer capacity calculations
+# Adding drops of .1 or .01 M HCl
+def get_Base_buffer_overload():
+    print("Buffer Capacity Exceeded!")
+
+def get_base_init_M(conc):
+    return conc * 10.000
+
+def get_excess_base_H(drops, conc):
+    return (get_HCl_M(drops, conc)) - (get_base_init_M(conc))
+
+# H+ method defined in the Base buffer capacity, using the excess H+
+def get_base_H(drops, conc):
+    return (get_excess_base_H(drops, conc)) / (get_total_volume(drops))
+
+# Acid buffer capacity calculations
+# Adding drops of .1 or .01 NaOH
+
+def get_NaOH_acid(conc, drops):
+    return ((10.000 * conc) - (drop_volume * drops * conc)) / get_total_volume(drops)
+
+def get_NaOH_base(conc, drops):
+    return ((10.000 * conc) + (drop_volume * drops * conc)) / get_total_volume(drops)
+
+def get_acid_buffer_overload():
+    print("Buffer Capacity Exceeded!")
+
+def get_acid_init_M(conc):
+    return conc*10.000
+
+def get_excess_OH(drops, conc):
+    return get_NaOH_M(drops, conc) - get_acid_init_M(conc)
