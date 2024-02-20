@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 class MovingProbe:
     def __init__(self, master):
         self.master = master
@@ -35,6 +36,7 @@ class MovingProbe:
         self.canvas.move(self.sensor_outer, 0, step)
         self.canvas.move(self.sensor_inner, 0, step)
         self.canvas.update()
+
 
 if __name__ == "__main__":
     root = tk.Tk()

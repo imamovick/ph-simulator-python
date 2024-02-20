@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 def create_ph_widget(master):
     # Create a frame for the pH display
     ph_frame = tk.Frame(master, borderwidth=2, relief="groove")
