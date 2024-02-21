@@ -1,31 +1,48 @@
 import tkinter as tk
 
 from gui.probe import MovingProbe
-from gui.simulator import create_ph_widget
-from gui.beaker import create_beaker
-from gui.dropper import create_dropper
-from gui.phscale import create_ph_indicator
+from gui.ph_meter_display import PhMeterDisplay
+from gui.beaker import Beaker
+from gui.dropper import Dropper
+from gui.phscale import PhIndicator  # Assuming PhIndicator is correctly defined as a tk.Frame subclass
 
-# Create an instance of the Tk class, which is the main window of the application
-root = tk.Tk()
-root.title("pH Simulator")
+def main():
+    root = tk.Tk()
+    root.title("pH Simulator")
+    root.geometry("900x900")
 
-# Set the window size
-root.geometry("900x900")
-root.resizable(False, False)
+    # Define the main layout grid
+    for i in range(3):
+        root.grid_rowconfigure(i, weight=1)
+        root.grid_columnconfigure(i, weight=1)
 
-# Create the widgets
-create_ph_widget(root)
-MovingProbe(root)
-create_beaker(root, 800, 800)
-create_dropper(root)
+    # Create and place the Reset and Undo buttons
+    reset_button = tk.Button(root, text="Reset")
+    reset_button.grid(row=0, column=0, sticky="nw", padx=10, pady=10)
+    undo_button = tk.Button(root, text="Undo")
+    undo_button.grid(row=0, column=1, sticky="nw", padx=10, pady=10)
 
-# Create the pH indicator
-ph_indicator_canvas, update_ph_indicator = create_ph_indicator(root)
-ph_indicator_canvas.pack(side='left', fill='y', expand=True)
+    # Create and place the pH meter display
+    ph_meter = PhMeterDisplay(root)
+    ph_meter.grid(row=0, column=2, sticky="ne", padx=10, pady=10)
 
-# Update the indicator to pH 7 (neutral) as a default or test value
-update_ph_indicator(7)
+    # Create and place the pH scale
+    ph_scale = PhIndicator(root, width=30, height=300)  # Adjust width and height as needed
+    ph_scale.grid(row=1, column=2, sticky="ne", padx=10, pady=10)
 
-# Start the GUI event loop
-root.mainloop()
+    # Create and place the beaker
+    beaker = Beaker(root, width=400, height=300)  # Assuming Beaker is a tk.Canvas subclass or similar
+    beaker.grid(row=2, column=1, sticky="nsew", padx=10, pady=50)
+
+    # Create and place the probe (make sure it's above the beaker)
+    probe = MovingProbe(root, ph_meter, ph_scale.update_ph_indicator)  # Correctly pass the update function
+    probe.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+
+    # Create and place the dropper (left of the probe)
+    dropper = Dropper(root)
+    dropper.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()

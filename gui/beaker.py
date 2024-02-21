@@ -1,43 +1,39 @@
 import tkinter as tk
 
 
-def create_beaker(master, width, height):
-    beaker_width = width // 5  # Beaker takes up one-fifth of the width
-    beaker_height = height // 5  # Beaker takes up the full height
+class Beaker(tk.Canvas):
+    def __init__(self, master, width=400, height=300, **kwargs):
+        super().__init__(master, width=width, height=height, bg='white', **kwargs)
 
-    # Create a canvas for the beaker
-    beaker_canvas = tk.Canvas(master, width=beaker_width, height=beaker_height, bg='white')
-    beaker_canvas.pack(anchor='s', padx=10, pady=10)  # Pack to the left side of the root window
-    beaker_canvas.place(x=350, y=550)
+        # Draw the beaker outline
+        self.create_rectangle(10, 10, width - 10, height - 10, outline="black", width=2)
 
-    # Draw the beaker outline
-    beaker_outline = beaker_canvas.create_rectangle(10, 10, beaker_width - 10, beaker_height - 10,
-                                                    outline="black", width=2)
+        # Define the starting X coordinate for measurement lines within the beaker
+        line_start_x = 15
+        # Define the ending X coordinate to cover a vertical third of the beaker, starting from the left
+        line_end_x = 15 + (width - 20) / 3
 
-    # Define the starting X coordinate for measurement lines within the beaker
-    line_start_x = 15
-    # Define the ending X coordinate to cover a vertical third of the beaker, starting from the left
-    line_end_x = 15 + (beaker_width - 20) / 3
+        # Calculate the spacing for the measurement lines
+        line_spacing = height / 6  # 5 spaces for lines
 
-    # Calculate the spacing for the measurement lines
-    line_spacing = beaker_height / 6  # 5 spaces for lines
+        # Draw the measurement lines inside the beaker
+        for i in range(4):
+            line_y = height - (i + 1) * line_spacing
+            self.create_line(line_start_x, line_y, line_end_x, line_y, fill="black", width=1.5)
 
-    # Draw the measurement lines inside the beaker
-    for i in range(4):
-        line_y = beaker_height - (i + 1) * line_spacing
-        beaker_canvas.create_line(line_start_x, line_y, line_end_x, line_y, fill="black", width=1.5)
-
-    # Add measurement texts to the right of the lines, within the beaker
-    text_x = line_end_x + 45  # Position text to the right of the end of the lines
-    beaker_canvas.create_text(text_x, beaker_height - 2 * line_spacing, text="10 mL", anchor="e", fill='black')
-    beaker_canvas.create_text(text_x, beaker_height - 4 * line_spacing, text="20 mL", anchor="e", fill='black')
-
-    return beaker_canvas
+        # Add measurement texts to the right of the lines, within the beaker
+        text_x = line_end_x + 45  # Position text to the right of the end of the lines
+        self.create_text(text_x, height - 2 * line_spacing, text="10 mL", anchor="e", fill='black')
+        self.create_text(text_x, height - 4 * line_spacing, text="20 mL", anchor="e", fill='black')
 
 
-# Test the function
+# Example usage in your main application
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Beaker Drawing")
-    create_beaker(root)
+    root.geometry("900x900")
+
+    beaker = Beaker(root, width=400, height=300)
+    beaker.grid(row=2, column=1, padx=10, pady=50)  # Adjust grid placement as necessary
+
     root.mainloop()

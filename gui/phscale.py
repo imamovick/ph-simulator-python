@@ -1,36 +1,35 @@
 import tkinter as tk
 
+class PhIndicator(tk.Frame):
+    def __init__(self, master, width=30, height=300, **kwargs):
+        super().__init__(master, **kwargs)
+        self.width = width  # Store width as an instance attribute
+        self.height = height  # Similarly, store height if needed for consistency
+        self.canvas = tk.Canvas(self, width=self.width, height=self.height)
+        self.canvas.grid(sticky="nsew")
 
-def create_ph_indicator(root, width=30, height=300):
-    # Create a canvas for the pH indicator
-    canvas = tk.Canvas(root, width=width, height=height)
-    canvas.pack(anchor='e')
+        # Configure grid to have the canvas expand to fill the frame
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
-    # Draw the gradient
-    for i in range(15):
-        color = calculate_color(i)  # Function to calculate the color based on pH value
-        canvas.create_rectangle(0, (14 - i) * (height // 14), width, (15 - i) * (height // 14), fill=color,
-                                outline=color)
+        # Draw the gradient and the indicator box as before
 
-    # Create the indicator box
-    indicator = canvas.create_rectangle(0, 0, width, height // 14, outline='black')
+    def update_ph_indicator(self, pH_value):
+        # Now width can be accessed as self.width
+        y0 = (14-pH_value) * (self.height//14)
+        y1 = y0 + (self.height//14)
+        self.canvas.coords(self.indicator_box, -5, y0, self.width+5, y1)
 
-    def update_indicator(pH_value):
-        # Move the indicator box to the correct position based on pH value
-        y0 = (14 - pH_value) * (height // 14)
-        y1 = (15 - pH_value) * (height // 14)
-        canvas.coords(indicator, 0, y0, width, y1)
-
-    # Return the canvas and the update function
-    return canvas, update_indicator
-
-
-def calculate_color(pH):
-    # This function calculates the color based on the pH value
-    # For simplicity, let's just use red for acidic and blue for basic
-    if pH < 7:
-        return '#ff0000'  # Red
-    elif pH == 7:
-        return '#00ff00'  # Green
-    else:
-        return '#0000ff'  # Blue
+    def calculate_color(self, pH):
+        # Calculate the color based on the pH value
+        if pH < 7:
+            r = 255
+            g = int(255 * (pH / 7))
+            b = 0
+        elif pH == 7:
+            r = g = b = 255  # Green
+        else:
+            r = 0
+            g = int(255 * ((14 - pH) / 7))
+            b = 255
+        return '#{:02x}{:02x}{:02x}'.format(r, g, b)

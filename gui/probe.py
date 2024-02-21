@@ -1,11 +1,13 @@
 import tkinter as tk
+import random
 
-
-class MovingProbe:
-    def __init__(self, master):
-        self.master = master
-        self.canvas = tk.Canvas(master, width=400, height=300)
-        self.canvas.pack(anchor='center')
+class MovingProbe(tk.Frame):
+    def __init__(self, master, ph_meter_display, update_ph_indicator, **kwargs):
+        super().__init__(master, **kwargs)
+        self.ph_meter_display = ph_meter_display
+        self.update_ph_indicator = update_ph_indicator
+        self.canvas = tk.Canvas(self, width=400, height=300)
+        self.canvas.grid(row=0, column=0)  # Use grid inside the frame
 
         # Sensor of the probe (outer circle)
         self.sensor_outer = self.canvas.create_oval(185, 130, 205, 150, fill="white", outline="black")
@@ -16,29 +18,35 @@ class MovingProbe:
         # Main shaft of the probe
         self.shaft = self.canvas.create_line(195, 150, 195, 290, fill="black", width=2)
 
-        self.button = tk.Button(master, text="Move it Ronnie", command=self.animate_probe)
-        self.button.pack()
+    def insert_probe(self):
+        self.animate_probe(1)  # Move down
 
-    def animate_probe(self):
+    def remove_probe(self):
+        self.animate_probe(-1)  # Move up
+
+    def animate_probe(self, direction):
         steps = 100  # Number of steps for smoother animation
-        down_step = 1  # Total distance to move divided by steps
-        up_step = -1
+        step_distance = (140 if direction > 0 else -140) / steps  # Total distance to move divided by steps
         delay = 20  # Delay in milliseconds for each step
 
         for i in range(steps):
-            self.master.after(i * delay, lambda step=down_step: self.move_probe(step))
-        for i in range(steps, 2*steps):
-            self.master.after(i * delay, lambda step=up_step: self.move_probe(step))
+            move_step = (i+1) * step_distance if direction > 0 else (steps-i) * step_distance
+            self.master.after(i * delay, lambda step=move_step: self.move_probe(step))
+
+        # Simulate pH measurement after insertion
+        if direction > 0:
+            self.master.after(steps * delay, self.measure_ph)
 
     def move_probe(self, step):
         # Move all parts of the probe together
         self.canvas.move(self.shaft, 0, step)
         self.canvas.move(self.sensor_outer, 0, step)
         self.canvas.move(self.sensor_inner, 0, step)
-        self.canvas.update()
 
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    my_gui = MovingProbe(root)
-    root.mainloop()
+    def measure_ph(self):
+        # Simulate pH measurement logic here
+        # For now, let's just set it to a random pH value for demonstration
+        import random
+        new_ph = random.uniform(0, 14)
+        self.ph_meter_display.set_ph_value(new_ph)
+        self.update_ph_indicator(new_ph)
