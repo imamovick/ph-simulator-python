@@ -2,6 +2,7 @@
 import math
 from constants import *
 
+
 # Function to calculate pH from [H+]
 # used for acid, bases, salts, and water
 def get_pH(hplus_conc):
@@ -12,10 +13,12 @@ def get_pH(hplus_conc):
 def get_pH_buffer(pKa, base_conc, acid_conc):
     return pKa+math.log10(base_conc/acid_conc)
 
+
 # Function to calculate [H+] from pH
 # currently unused
 def get_hplus_conc_from_ph(ph):
     return 10 ** (-ph)
+
 
 # Function to calculate pH for an acid solution
 def get_ph_acid_solution(Ka, conc):
@@ -23,16 +26,28 @@ def get_ph_acid_solution(Ka, conc):
     hplus_conc = math.sqrt(Ka * conc)
     return get_pH(hplus_conc)
 
+<<<<<<< HEAD
+
+# Function to calculate pH for a base solution using Kb and concentration
+def calculate_ph_base_solution(kb, concentration):
+    # Calculate [OH-] concentration from Kb and concentration, then find [H+]
+    oh_concentration = math.sqrt(kb * concentration)
+    hplus_concentration = constants['Kw'] / oh_concentration
+    return calculate_ph_from_hplus_concentration(hplus_concentration)
+=======
 # Function to calculate pH for a base solution using Kb and conc
 def get_ph_base_solution(Kb, conc):
     # Calculate [OH-] conc from Kb and conc, then find [H+]
     oh_conc = math.sqrt(Kb * conc)
     hplus_conc = Kw / oh_conc
     return get_pH(hplus_conc)
+>>>>>>> c37710b72cfc4bdb34a63530c170c73406263d35
+
 
 # Function to calculate pKa from Ka
 def get_pKa(Ka):
     return -math.log10(Ka)
+
 
 # Function to calculate pKb from Kb
 def get_pKb(Kb):
