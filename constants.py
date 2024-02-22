@@ -17,3 +17,55 @@ pKa_carbonic_acid = 6.367  # Used for H2CO3
 # other consts
 initial_water_pH = 7
 drop_volume = 0.036
+drops=0;
+base_conc=0
+acid_conc=0
+M_HCl=0
+M_NaOH=0;
+Hplus=0;
+excessHplus=0;
+excessOH=0;
+OH=0;
+
+# chemical concentrations, safe measure in case multiple chemicals require accessing the same conc variable
+
+Ba_OH_2_conc=0;
+
+# Calcium Hydroxide, strong base
+CA_OH_2_conc=0;
+
+# Sodium Hydroxide, strong base
+NaOH_conc=0;
+
+# Ammonium Hydroxide, weak base
+NH4OH_conc=0;
+
+# Hydrochloric Acid, strong acid
+HCl_conc=0;
+
+# Nitric Acid, strong acid
+HNO3_conc=0;
+
+# Acetic Acid, weak acid
+HC2H3O2_conc=0;
+
+# Carbonic Acid, weak acid
+H2CO3_conc=0;
+
+# Sodium Chloride, neutral salt
+# NaCl=7;
+
+# Ammonium Chloride, acidic salt of NH3
+NH4Cl_conc=0;
+
+# Sodium Acetate, basic salt of HC2H3O2
+NaC2H3O2_conc=0;
+
+# Sodium Bicarbonate, basic salt H2CO3
+NaHCO3_conc=0;
+
+# Sodium Carbonate, basic salt of HCO3
+Na2CO3_conc=0;
+
+# Sodium Bisulfate, acidic salt of H2SO4
+NaHSO4_conc=0;
