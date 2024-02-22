@@ -28,7 +28,7 @@ def init_gui(root):
 
     # Create and place the probe (make sure it's above the beaker)
     probe = MovingProbe(root)
-    probe.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+    probe.grid(row=1, column=1, rowspan=2, sticky="nsew", padx=10, pady=10)
 
     # Create and place the pH meter display
     ph_meter = PhMeterDisplay(root, probe)

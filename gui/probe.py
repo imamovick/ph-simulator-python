@@ -6,8 +6,8 @@ class MovingProbe(tk.Frame):
         super().__init__(master, **kwargs)
         # self.ph_meter_display = ph_meter_display
         # self.update_ph_indicator = update_ph_indicator
-        self.canvas = tk.Canvas(self, width=300, height=300)
-        self.canvas.grid(row=0, column=0)  # Use grid inside the frame
+        self.canvas = tk.Canvas(self, width=300, height=400, borderwidth=2, relief="groove")
+        self.canvas.grid(row=0, column=0, pady=20)  # Use grid inside the frame
 
         # Sensor of the probe (outer circle)
         self.sensor_outer = self.canvas.create_oval(185, 130, 205, 150, fill="white", outline="black")
@@ -16,7 +16,7 @@ class MovingProbe(tk.Frame):
         self.sensor_inner = self.canvas.create_oval(192, 137, 198, 143, fill="orange")
 
         # Main shaft of the probe
-        self.shaft = self.canvas.create_line(195, 150, 195, 290, fill="black", width=2)
+        self.shaft = self.canvas.create_line(195, 150, 195, 400, fill="black", width=4)
 
     def insert_probe(self):
         self.animate_probe(1)  # Move down
@@ -25,9 +25,10 @@ class MovingProbe(tk.Frame):
         self.animate_probe(-1)  # Move up
 
     def animate_probe(self, direction):
-        steps = 100  # Number of steps for smoother animation
-        step_distance = (140 if direction > 0 else -140) / steps  # Total distance to move divided by steps
-        delay = 20  # Delay in milliseconds for each step
+        steps = 200  # Number of steps for smoother animation
+        total_distance = 5  # Reduce the total distance the probe should move so it stays visible
+        step_distance = (total_distance if direction > 0 else -total_distance) / steps
+        delay = 30  # Delay in milliseconds for each step
 
         for i in range(steps):
             move_step = (i+1) * step_distance if direction > 0 else (steps-i) * step_distance
