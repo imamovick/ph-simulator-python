@@ -1,7 +1,7 @@
 import tkinter as tk
 
 class PhMeterDisplay(tk.Frame):
-    def __init__(self, master, **kwargs):
+    def __init__(self, master, probe, **kwargs):
         super().__init__(master, borderwidth=2, relief="groove", **kwargs)
 
         # Initialize the pH value
@@ -25,11 +25,11 @@ class PhMeterDisplay(tk.Frame):
 
         # TODO: hook to probe animations
         # Insert probe button
-        self.insert_probe_button = tk.Button(probe_frame, text="Insert Probe", width=15)
+        self.insert_probe_button = tk.Button(probe_frame, text="Insert Probe", command=probe.insert_probe, width=15)
         self.insert_probe_button.grid(row=0, column=0, padx=5, pady=5)
 
         # Remove probe button
-        self.remove_probe_button = tk.Button(probe_frame, text="Remove Probe", width=15)
+        self.remove_probe_button = tk.Button(probe_frame, text="Remove Probe", command=probe.remove_probe, width=15)
         self.remove_probe_button.grid(row=0, column=1, padx=5, pady=5)
 
     def set_ph_value(self, new_ph):

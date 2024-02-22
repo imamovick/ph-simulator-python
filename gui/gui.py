@@ -22,21 +22,21 @@ def init_gui(root):
     # undo_button = tk.Button(root, text="Undo")
     # undo_button.grid(row=0, column=1, sticky="nw", padx=10, pady=10)
 
-    # Create and place the pH meter display
-    ph_meter = PhMeterDisplay(root)
-    ph_meter.grid(row=0, column=2, sticky="ne", padx=10, pady=10)
-
-    # Create and place the dropper (left of the probe)
-    # dropper = Dropper(root)
-    # dropper.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
-
     # Create and place the pH scale
     ph_scale = PhIndicator(root, width=30, height=300)  # Adjust width and height as needed
     ph_scale.grid(row=1, column=2, rowspan=2, sticky="ne", padx=10, pady=10)
 
     # Create and place the probe (make sure it's above the beaker)
-    probe = MovingProbe(root, ph_meter, ph_scale.update_ph_indicator)  # Correctly pass the update function
+    probe = MovingProbe(root)
     probe.grid(row=1, column=1, sticky="nsew", padx=10, pady=10)
+
+    # Create and place the pH meter display
+    ph_meter = PhMeterDisplay(root, probe)
+    ph_meter.grid(row=0, column=2, sticky="ne", padx=10, pady=10)
+
+    # Create and place the dropper (left of the probe)
+    # dropper = Dropper(root)
+    # dropper.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
     # Create and place the beaker
     beaker = Beaker(root, width=400, height=300)  # Assuming Beaker is a tk.Canvas subclass or similar
