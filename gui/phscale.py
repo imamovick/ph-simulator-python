@@ -11,22 +11,29 @@ class PhIndicator(tk.Frame):
         ]
 
         # Create a canvas to draw the vertical pH scale
-        self.canvas = tk.Canvas(self, width=300, height=300)
-        self.canvas.grid(row=0, column=0, padx=10, pady=10)
+        self.canvas = tk.Canvas(self, width=338, height=650)
+        self.canvas.grid(row=0, column=0, padx=10, pady=20)
 
         self.draw_scale()
 
     def draw_scale(self):
-        band_height = 20
+        band_height = 50
         for i, color in enumerate(self.colors):
-            self.canvas.create_rectangle(50, i*band_height, 150, (i+1)*band_height, fill=color, outline=color)
+            self.canvas.create_rectangle(50, i*band_height, 300, (i+1)*band_height, fill=color, outline=color)
             self.canvas.create_text(30, i*band_height + band_height/2, text=str(i), font=('Helvetica', '10'))
 
             # Text descriptions
             descriptions = ["very acidic", "acidic", "neutral", "basic", "very basic"]
-            description_positions = [2.5, 5.5, 7, 9.5, 12.5]
+            description_positions = [2, 4.5, 6.5, 8.5, 11.5]
             for description, position in zip(descriptions, description_positions):
-                self.canvas.create_text(170, position*band_height, text=description, angle=90, font=('Helvetica', '10'))
+                self.canvas.create_text(320, position*band_height, text=description, angle=90, font=('Helvetica', '10'))
+    
+    def update_ph_indicator(self, new_ph):
+        # Update the pH indicator color based on the new pH value
+        # The new pH value should be a float between 0 and 14
+        # Use the colors list to determine the color to display
+        color_index = int(new_ph)
+        self.canvas.create_rectangle(200, 0, 250, 300, fill=self.colors[color_index], outline=self.colors[color_index])
 
 # The example usage below is only for testing the PhScaleDisplay class independently.
 if __name__ == "__main__":

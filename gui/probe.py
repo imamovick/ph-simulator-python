@@ -5,8 +5,8 @@ class MovingProbe(tk.Frame):
     def __init__(self, master, ph_meter_display, update_ph_indicator, **kwargs):
         super().__init__(master, **kwargs)
         self.ph_meter_display = ph_meter_display
-        self.update_ph_indicator = update_ph_indicator
-        self.canvas = tk.Canvas(self, width=400, height=300)
+        # self.update_ph_indicator = update_ph_indicator
+        self.canvas = tk.Canvas(self, width=300, height=300)
         self.canvas.grid(row=0, column=0)  # Use grid inside the frame
 
         # Sensor of the probe (outer circle)
@@ -49,4 +49,4 @@ class MovingProbe(tk.Frame):
         import random
         new_ph = random.uniform(0, 14)
         self.ph_meter_display.set_ph_value(new_ph)
-        self.update_ph_indicator(new_ph)
+        # self.update_ph_indicator(new_ph)

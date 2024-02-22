@@ -23,6 +23,7 @@ class PhMeterDisplay(tk.Frame):
         probe_frame = tk.Frame(self)
         probe_frame.grid(row=2, column=0, columnspan=2, pady=5)
 
+        # TODO: hook to probe animations
         # Insert probe button
         self.insert_probe_button = tk.Button(probe_frame, text="Insert Probe", width=15)
         self.insert_probe_button.grid(row=0, column=0, padx=5, pady=5)
