@@ -69,3 +69,21 @@ Na2CO3_conc=0;
 
 # Sodium Bisulfate, acidic salt of H2SO4
 NaHSO4_conc=0;
+
+# HOUSEHOLD ITEMS
+
+household_items={
+    "Table Salt (Sodium Chloride)": 7.0,
+    "Baking Soda (sodium bicarbonate)": 8.3,
+    "Hydrogen Peroxide (3% H2O2)": 6.2,
+    "Drano (contains Sodium Hydroxide)": 12.0,
+    "Liquid Plumber (contains Sulfuric Acid)": 1.0,
+    "Soft Drink (contains Citric and Carbonic Acids)": 3.2,
+    "Orange Juice (contains Citric and Ascorbic Acids)": 3.9,
+    "Milk": 6.8,
+    "Dish Soap": 8.7,
+    "Blood": 7.40,
+    "Battery Acid (contains Sulfuric Acid)": 1.0,
+    "Ammonia Cleaner (2% Ammonium Hydroxide)": 11.6,
+    "Vinegar (5% Acetic Acid)": 2.4
+}
